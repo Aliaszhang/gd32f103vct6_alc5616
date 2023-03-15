@@ -1,6 +1,3 @@
 .vscode
-./Prj/Out
-./Prj/Out/*
-./Prj/Objects
-
-
+Prj/Out/*
+Prj/*.ddd
