@@ -1,3 +1,6 @@
 .vscode
 Prj/Out/*
 Prj/*.ddd
+Prj/JLinkSettings.ini
+Prj/JLinkLog.txt
+Prj/EventRecorderStub.scvd

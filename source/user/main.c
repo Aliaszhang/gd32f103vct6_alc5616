@@ -52,7 +52,7 @@ int main(void)
     board_gpio_init();
     uart_init();
     i2c_config();
-    i2s1_init();
+    spi_i2s_init();
     alc5616_init();
     
     printf("CK_SYS is %d\r\n", rcu_clock_freq_get(CK_SYS));

@@ -319,16 +319,14 @@ uint8_t wav_decode_init(__wavctrl* wavx, uint32_t addr)
 }
 
 #if 1
-#define AUDIO_ALRAM_ONE_DATA_SIZE        (15360U)
-static uint16_t audio_buffer[AUDIO_ALRAM_ONE_DATA_SIZE] = {0xFF};
 
 int i2s_transfer_dma(uint32_t addr)
 {
-    uint32_t rd_size, remain_len;
+    uint32_t remain_len;
     uint32_t rd_addr;
     uint8_t ret;
     // uint16_t *audio_buffer = NULL;
-    dma_parameter_struct dma_init_struct;
+    // dma_parameter_struct dma_init_struct;
 
 
     ret = wav_decode_init(&wavctrl, addr);
@@ -402,16 +400,16 @@ int i2s_transfer_dma(uint32_t addr)
     return 0;
 }
 #else
-#define AUDIO_ALRAM_ONE_DATA_SIZE        (30720U)
+#define AUDIO_ALRAM_ONE_DATA_SIZE        (4096U)
 static uint8_t audio_buffer[AUDIO_ALRAM_ONE_DATA_SIZE] = {0xFF};
 
-int i2s_transfer_dma(void)
+int i2s_transfer_dma(uint32_t addr)
 {
     uint32_t rd_size, remain_len;
     uint32_t rd_addr;
     uint8_t ret;
 
-    ret = wav_decode_init(&wavctrl);
+    ret = wav_decode_init(&wavctrl, addr);
     if (ret != 0)
     {
         printf("decoede wav fail, ret = %d\r\n", ret);
@@ -431,7 +429,7 @@ int i2s_transfer_dma(void)
     i2s_enable(SPI1);
 
     remain_len = wavctrl.datasize;
-    rd_addr = AUDIO_ALARM_DATA_ADDR + wavctrl.datastart;
+    rd_addr = addr + wavctrl.datastart;
     
     ret = 0;
     while (remain_len > 0)
